@@ -1,7 +1,4 @@
-const fs = require("fs");
-const { promisify } = require("util");
-
-const readFile = promisify(fs.readFile);
+const readFile = require("../lib/ezRead");
 
 function fuelForMass(massStr) {
     return Math.floor(parseInt(massStr, 10) / 3) - 2;
