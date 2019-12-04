@@ -23,7 +23,6 @@ module.exports = class Grid {
                         return;
                     }
 
-                    // this.grid[this.y][this.x] = this.currVal === "-" ? "+" : "|";
                     this.setVal(this.currVal === "-" ? "+" : "|");
                 }
 
@@ -36,7 +35,6 @@ module.exports = class Grid {
                         return;
                     }
 
-                    // this.currRow[this.x] = this.currVal === "|" ? "+" : "-";
                     this.setVal(this.currVal === "|" ? "+" : "-");
                 }
 
@@ -49,7 +47,6 @@ module.exports = class Grid {
                         return;
                     }
 
-                    // this.grid[this.y][this.x] = this.currVal === "-" ? "+" : "|";
                     this.setVal(this.currVal === "-" ? "+" : "|")
                 }
 
@@ -62,7 +59,6 @@ module.exports = class Grid {
                         return;
                     }
 
-                    // this.currRow[this.x] = this.currVal === "|" ? "+" : "-";
                     this.setVal(this.currVal === "|" ? "+" : "-");
                 }
 
@@ -86,11 +82,6 @@ module.exports = class Grid {
                     collisions.push({ x : x - this.offset, y : y - this.offset });
                 }
             }
-            // row.forEach((cell, x) => {
-            //     if (wires.includes(cell) && wires.includes(grid.grid[y][x])) {
-            //         collisions.push({ x, y });
-            //     }
-            // });
         });
 
         return collisions;
