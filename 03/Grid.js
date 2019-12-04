@@ -66,6 +66,45 @@ module.exports = class Grid {
         }
     }
 
+    findCollisionsWith(grid) {
+        const collisions = [];
+        const wires = [ "|", "-", "+" ];
+
+        this.grid.forEach((row, y) => {
+            row.forEach((cell, x) => {
+                if (wires.includes(cell) && wires.includes(grid.grid[y][x])) {
+                    collisions.push({ x, y });
+                }
+            });
+        });
+
+        return collisions;
+    }
+
+    get x() {
+        return this._x;
+    }
+
+    set x(v) {
+        this._x = v;
+
+        if (this.x < 0 || (this.x > (2 * this.offset))) {
+            throw new Error(`Added line outside bounds, x: ${this.x}`);
+        }
+    }
+
+    get y() {
+        return this._y;
+    }
+
+    set y(v) {
+        this._y = v;
+
+        if (this.y < 0 || (this.y > (2 * this.offset))) {
+            throw new Error(`Added line outside bounds, y: ${this.y}`);
+        }
+    }
+
     get currVal() {
         return this.grid[this.y][this.x];
     }
