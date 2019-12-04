@@ -7,7 +7,7 @@ readFile("./input.txt")
     const grids = [];
 
     d.split("\n").forEach((line, idx) => {
-        const grid = new Grid(5000);
+        const grid = new Grid(9000);
 
         console.log(`line ${idx}`);
 
@@ -17,11 +17,19 @@ readFile("./input.txt")
             const dir = inst[0];
             const len = parseInt(inst.slice(1), 10);
 
-            console.log(dir, len);
+            // console.log(dir, len);
 
             grid.addLine(dir, len);
         });
     });
 
-    console.log(grid[0].findCollisions(grid[1]));
+    const collisions = grids[0].findCollisionsWith(grids[1]);
+
+    const shortestDist = collisions.reduce((smallest, { x, y }) => {
+        const dist = Math.abs(x) + Math.abs(y);
+
+        return smallest > dist ? dist : smallest;
+    }, Number.MAX_SAFE_INTEGER);
+
+    console.log(shortestDist);
 });

@@ -7,10 +7,10 @@ module.exports = class Grid {
         this.y = offset;
 
         for (let i = 0; i < 2 * offset; i++) {
-            this.grid.push(new Array(2 * offset).fill("."));
+            this.grid.push(".".repeat(2 * offset));
         }
 
-        this.grid[this.y][this.x] = 0;
+        this.setVal(0);
     }
 
     addLine(dir, len) {
@@ -23,7 +23,8 @@ module.exports = class Grid {
                         return;
                     }
 
-                    this.grid[this.y][this.x] = this.currVal === "-" ? "+" : "|";
+                    // this.grid[this.y][this.x] = this.currVal === "-" ? "+" : "|";
+                    this.setVal(this.currVal === "-" ? "+" : "|");
                 }
 
                 break;
@@ -35,7 +36,8 @@ module.exports = class Grid {
                         return;
                     }
 
-                    this.currRow[this.x] = this.currVal === "|" ? "+" : "-";
+                    // this.currRow[this.x] = this.currVal === "|" ? "+" : "-";
+                    this.setVal(this.currVal === "|" ? "+" : "-");
                 }
 
                 break;
@@ -47,7 +49,8 @@ module.exports = class Grid {
                         return;
                     }
 
-                    this.grid[this.y][this.x] = this.currVal === "-" ? "+" : "|";
+                    // this.grid[this.y][this.x] = this.currVal === "-" ? "+" : "|";
+                    this.setVal(this.currVal === "-" ? "+" : "|")
                 }
 
                 break;
@@ -59,23 +62,35 @@ module.exports = class Grid {
                         return;
                     }
 
-                    this.currRow[this.x] = this.currVal === "|" ? "+" : "-";
+                    // this.currRow[this.x] = this.currVal === "|" ? "+" : "-";
+                    this.setVal(this.currVal === "|" ? "+" : "-");
                 }
 
                 break;
         }
     }
 
-    findCollisionsWith(grid) {
+    setVal(char) {
+        const row = this.grid[this.y];
+
+        this.grid[this.y] = row.substr(0, this.x) + char + row.substr(this.x + 1);
+    }
+
+    findCollisionsWith({ grid }) {
         const collisions = [];
         const wires = [ "|", "-", "+" ];
 
         this.grid.forEach((row, y) => {
-            row.forEach((cell, x) => {
-                if (wires.includes(cell) && wires.includes(grid.grid[y][x])) {
-                    collisions.push({ x, y });
+            for (let x = 0; x < row.length; x++) {
+                if (wires.includes(row.charAt(x)) && wires.includes(grid[y].charAt(x))) {
+                    collisions.push({ x : x - this.offset, y : y - this.offset });
                 }
-            });
+            }
+            // row.forEach((cell, x) => {
+            //     if (wires.includes(cell) && wires.includes(grid.grid[y][x])) {
+            //         collisions.push({ x, y });
+            //     }
+            // });
         });
 
         return collisions;
@@ -88,7 +103,7 @@ module.exports = class Grid {
     set x(v) {
         this._x = v;
 
-        if (this.x < 0 || (this.x > (2 * this.offset))) {
+        if (this.x < 0 || (this.x > (2 * this.offset) - 1)) {
             throw new Error(`Added line outside bounds, x: ${this.x}`);
         }
     }
@@ -100,13 +115,13 @@ module.exports = class Grid {
     set y(v) {
         this._y = v;
 
-        if (this.y < 0 || (this.y > (2 * this.offset))) {
+        if (this.y < 0 || (this.y > (2 * this.offset) - 1)) {
             throw new Error(`Added line outside bounds, y: ${this.y}`);
         }
     }
 
     get currVal() {
-        return this.grid[this.y][this.x];
+        return this.grid[this.y].charAt(this.x);
     }
 
     get currRow() {
@@ -114,6 +129,6 @@ module.exports = class Grid {
     }
 
     toString() {
-        return this.grid.map(row => row.join("")).join("\n");
+        return this.grid.join("\n");
     }
 };
