@@ -1,6 +1,6 @@
 const readFile = require("../lib/ezRead");
 
-const Grid = require("./Grid");
+const Grid = require("./Grid2");
 
 readFile("./input.txt")
 .then(d => {
@@ -17,19 +17,24 @@ readFile("./input.txt")
             const dir = inst[0];
             const len = parseInt(inst.slice(1), 10);
 
-            // console.log(dir, len);
-
             grid.addLine(dir, len);
         });
     });
 
+    // console.log("g0l", grids[0].grid.length, "g1l", grids[1].grid.length);
+
     const collisions = grids[0].findCollisionsWith(grids[1]);
 
-    const shortestDist = collisions.reduce((smallest, { x, y }) => {
+    // console.log("collisions", collisions);
+
+    const shortestDist = collisions.reduce(({ nearest, shortest }, { x, y, length }) => {
         const dist = Math.abs(x) + Math.abs(y);
 
-        return smallest > dist ? dist : smallest;
-    }, Number.MAX_SAFE_INTEGER);
+        return {
+            nearest : nearest > dist ? dist : nearest,
+            shortest : shortest > length ? length : shortest
+        };
+    }, { nearest : Number.MAX_SAFE_INTEGER, shortest : Number.MAX_SAFE_INTEGER });
 
-    console.log(shortestDist);
+    console.log("collisions", shortestDist);
 });
