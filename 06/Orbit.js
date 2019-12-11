@@ -18,13 +18,37 @@ module.exports = class Orbit {
         return this.sats[sat].length + this.satOrbits(last(this.sats[sat]));
     }
 
-    numberOfOrbits() {
-        let numOrbits = 0;
+    numberOfOrbits(s0, s1) {
+        const p0 = this.satPath(s0);
+        const p1 = this.satPath(s1);
 
-        each(this.sats, ({ key : sat, value : orbits }) => {
-            numOrbits += this.satOrbits(sat);
+        const commonSat = this.findCommonSat(s0, s1);
+
+        return p0.indexOf(commonSat) + p1.indexOf(commonSat);
+    }
+
+    satPath(sat) {
+        if (!this.sats[sat]) {
+            return [];
+        }
+
+        return [ ...this.sats[sat], ...this.satPath(last(this.sats[sat])) ];
+    }
+
+    findCommonSat(s0, s1) {
+        const p0 = this.satPath(s0);
+        const p1 = this.satPath(s1);
+
+        let commonSat;
+
+        p0.some(s => {
+            if (p1.includes(s)) {
+                commonSat = s;
+
+                return true;
+            }
         });
 
-        return numOrbits;
+        return commonSat;
     }
 };

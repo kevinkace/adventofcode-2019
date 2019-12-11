@@ -1,5 +1,5 @@
 const readFile = require("../lib/ezFs");
-const Orbit = require("./Orbit");
+const Orbit    = require("./Orbit");
 
 readFile("./input.txt")
 .then(d => {
@@ -11,5 +11,5 @@ readFile("./input.txt")
         orbit.add(p0, p1);
     });
 
-    console.log(orbit.numberOfOrbits());
+    console.log(orbit.numberOfOrbits("YOU", "SAN"));
 });
