@@ -22,10 +22,12 @@ module.exports = class Intcode {
     process() {
         let idx = 0, iteration = -1, outputIteration;
         let instruction = this.opcodes[idx];
-        let input, p1Mode, p2Mode, p3Mode;
+        let input;
 
         while (instruction !== undefined) {
             iteration++;
+
+            let p1Mode, p2Mode, p3Mode;
 
             const p1 = this.opcodes[idx + 1];
             const p2 = this.opcodes[idx + 2];
