@@ -1,6 +1,11 @@
-const readFile = require("../lib/ezRead");
+const readFile = require("../lib/ezFs");
+const Intcode  = require("./Intcode");
 
 readFile("./input.txt")
 .then(d => {
-    d.split(",").forEach()
+    const intcode = new Intcode(d, "1");
+
+    intcode.process();
+
+    // console.log(`${intcode}`);
 });
