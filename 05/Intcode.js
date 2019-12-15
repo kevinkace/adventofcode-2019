@@ -3,8 +3,9 @@ function parseCodes(codes) {
 }
 
 module.exports = class Intcode {
-    constructor(opcodes, input) {
+    constructor(opcodes, input, maxIterations = 200) {
         this.opcodes = parseCodes(opcodes);
+        this.maxIterations = maxIterations;
 
         if (input) {
             this.input = parseCodes(input);
@@ -24,7 +25,7 @@ module.exports = class Intcode {
         let instruction = this.opcodes[idx];
         let input;
 
-        while (instruction !== undefined) {
+        while (instruction !== undefined && iteration <= this.maxIterations) {
             iteration++;
 
             const p1 = this.opcodes[idx + 1];
@@ -36,7 +37,7 @@ module.exports = class Intcode {
             const value1 = p1Mode ? p1 : this.opcodes[p1];
             const value2 = p2Mode ? p2 : this.opcodes[p2];
 
-            // console.log(`i: ${iteration}, inst: ${instruction}, p: ${p1} ${p2} ${p3}, m: ${p1Mode} ${p2Mode} ${p3Mode}, v: ${v1} ${v2}`);
+            // console.log(`i: ${iteration}, inst: ${instruction}, p: ${p1} ${p2} ${p3}, m: ${p1Mode} ${p2Mode}, v: ${value1} ${value2}`);
 
             switch (inst) {
                 case 1:
@@ -64,13 +65,38 @@ module.exports = class Intcode {
 
                 case 4:
                     outputIteration = iteration;
-                    console.log(`test result: ${value1}`);
+                    console.log(value1);
 
                     idx += 2;
 
                     break;
 
+                case 5:
+                    idx = value1 ? value2 : idx + 3;
+
+                    break;
+
+                case 6:
+                    idx = !value1 ? value2 : idx + 3;
+
+                    break;
+
+                case 7:
+                    this.opcodes[p3] = value1 < value2 ? 1 : 0;
+
+                    idx += 4;
+
+                    break;
+
+                case 8:
+                    this.opcodes[p3] = value1 === value2 ? 1 : 0;
+
+                    idx += 4;
+
+                    break;
+
                 case 99:
+                    // console.log(this.opcodes.join(", "));
                     console.log(iteration === outputIteration + 1 ? "DONE" : "ERROR");
 
                     return;
@@ -80,10 +106,16 @@ module.exports = class Intcode {
                 default:
                     console.log("Unhandled instruction");
 
+                    return;
+
                     break;
             }
 
             instruction = this.opcodes[idx];
+        }
+
+        if (iteration > this.maxIterations) {
+            console.log("Error: max iterations");
         }
     }
 
