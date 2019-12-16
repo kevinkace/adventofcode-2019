@@ -1,5 +1,3 @@
-
-
 module.exports = class Intcode {
     constructor(opcodes, input, maxIterations = 200) {
         this.opcodes       = opcodes.slice();
@@ -15,7 +13,7 @@ module.exports = class Intcode {
         return this.opcodes[idx];
     }
 
-    process(input) {
+    process() {
         const output = [];
 
         let idx = 0,
@@ -23,10 +21,6 @@ module.exports = class Intcode {
             outputIteration,
 
             instruction = this.opcodes[idx];
-
-        if (input) {
-            this.input = input;
-        }
 
         while (instruction !== undefined && iteration <= this.maxIterations) {
             iteration++;
