@@ -1,3 +1,3 @@
-const validate = require("./validate");
+const validate = require("../validate");
 
 console.log(validate(222333));

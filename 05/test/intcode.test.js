@@ -1,6 +1,6 @@
-const readFile = require("../lib/ezFs");
+const readFile = require("../../lib/ezFs");
 
-const Intcode = require("./Intcode");
+const Intcode = require("../Intcode");
 
 // readFile("./input.txt")
 // readFile("../02/input.txt")

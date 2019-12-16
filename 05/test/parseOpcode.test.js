@@ -1,4 +1,4 @@
-const Intcode = require("./Intcode");
+const Intcode = require("../Intcode");
 
 function test() {
     const intcode = new Intcode("");

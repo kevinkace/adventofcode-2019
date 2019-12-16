@@ -1,5 +1,5 @@
-const readFile = require("../lib/ezFs");
-const Orbit    = require("./Orbit");
+const readFile = require("../../lib/ezFs");
+const Orbit    = require("../Orbit");
 
 function test0() {
     const orbit = new Orbit();
