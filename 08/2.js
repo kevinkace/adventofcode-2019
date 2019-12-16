@@ -6,10 +6,10 @@ require("../lib/ezFs")("./input.txt").then(d => {
 
     const layers = parsed.reduce((acc, el, idx) => {
         // const layer = Math.floor(idx / (w * h));
-        const row   = Math.floor(idx / w);
+        const row   = Math.floor(idx / w) % 6;
         const col   = idx % w;
 
-        console.log(row, col);
+        // idx < 200 && console.log(idx, row, col);
 
         // acc[layer]      = acc[layer]      || [];
         acc[row] = acc[row] || [];
@@ -21,5 +21,7 @@ require("../lib/ezFs")("./input.txt").then(d => {
         return acc;
     }, []);
 
-    // console.log(layers);
+    const joined = layers.map(row => row.map(cell => (cell ? "█" : " ")).join("")).join("\n");
+
+    console.log(joined);
 });
