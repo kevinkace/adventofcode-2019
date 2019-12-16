@@ -15,16 +15,18 @@ module.exports = class Intcode {
         return this.opcodes[idx];
     }
 
-    process() {
+    process(input) {
         const output = [];
 
         let idx = 0,
             iteration = -1,
             outputIteration,
 
-            instruction = this.opcodes[idx],
+            instruction = this.opcodes[idx];
 
-            input;
+        if (input) {
+            this.input = input;
+        }
 
         while (instruction !== undefined && iteration <= this.maxIterations) {
             iteration++;
@@ -56,9 +58,7 @@ module.exports = class Intcode {
                     break;
 
                 case 3:
-                    input = this.input.shift();
-
-                    this.opcodes[p1] = input;
+                    this.opcodes[p1] = this.input.shift();
 
                     idx += 2;
 
