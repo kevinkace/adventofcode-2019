@@ -1,5 +1,5 @@
 const ampOutput = require("./ampOutput");
-const popAt   = require("../lib/popAt");
+const popAt     = require("../lib/popAt");
 
 function iter(prev, curr, cb) {
     if (!cb) {
@@ -9,8 +9,8 @@ function iter(prev, curr, cb) {
     }
 
     if (curr.length === 2) {
-        cb([...prev, curr[0], curr[1]]);
-        cb([...prev, curr[1], curr[0]]);
+        cb([ ...prev, curr[0], curr[1] ]);
+        cb([ ...prev, curr[1], curr[0] ]);
 
         return;
     }
