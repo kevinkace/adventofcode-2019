@@ -1,5 +1,5 @@
-const Intcode = require("./Intcode");
-const readFile = require("../lib/ezFs");
+const Intcode = require("../Intcode");
+const readFile = require("../../lib/ezFs");
 
 function test() {
     console.log("1 is not equal to 8, output 0");

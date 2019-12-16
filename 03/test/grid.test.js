@@ -1,4 +1,4 @@
-const Grid = require("./Grid2");
+const Grid = require("../Grid2");
 
 const grid = new Grid(7);
 
