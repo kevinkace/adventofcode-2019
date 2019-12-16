@@ -1,23 +1,10 @@
 const Intcode = require("./Intcode2");
 
-function testPhaseSetting(phaseSetting, prevOutput, opcodes) {
-
-    // console.log(phaseSetting, prevOutput);
-
-    const intcode = new Intcode(opcodes, [ phaseSetting, prevOutput ]);
-
-    const output = intcode.process();
-
-    return output.pop();
-}
-
 module.exports = function ampOutput(phaseSettings, opcodes) {
-    let output = 0,
-        iteration    = 0;
+    let output    = 0,
+        iteration = 0;
 
     const intcodes = phaseSettings.map(phaseSetting => new Intcode(opcodes, [ phaseSetting ]));
-
-    // intcodes[0].process([ phaseSettings[0], 0]);
 
     while (typeof output !== "object" && iteration < 100) {
         const idx = iteration % phaseSettings.length;
@@ -38,10 +25,4 @@ module.exports = function ampOutput(phaseSettings, opcodes) {
     // console.log(output);
 
     return output.output;
-
-    // phaseSettings.forEach(phaseSetting => {
-    //     prev = testPhaseSetting(phaseSetting, prev, opcodes);
-    // });
-
-    // return prev;
 };
