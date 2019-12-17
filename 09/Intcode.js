@@ -118,7 +118,7 @@ module.exports = class Intcode {
         }
 
         if (iteration > this.maxIterations) {
-            console.log("Error: max iterations");
+            console.log("Error: max iterations", iteration);
         }
     }
 
