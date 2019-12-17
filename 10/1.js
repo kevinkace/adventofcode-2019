@@ -1,25 +1,26 @@
+const popAt = require("../lib/popAt");
+
 const asteroid = "#";
 
-function numAsteroids([ cx, cy ], asteroids) {
-    const visible = [];
-
-    console.log(cx, cy);
+function getNumAsteroids([ cx, cy ], asteroids) {
+    const visible = new Set();
 
     asteroids.forEach(([ ax, ay ]) => {
-        // console.log("roid");
-        visible.push(Math.atan((ax - cx) / (ay - cy)));
+        visible.add(Math.atan2(ay - cy, ax - cx));
     });
 
-    return visible.flat().length;
+    return visible.size;
 }
 
-require("../lib/ezFs")("./test/input-0.txt").then(d => {
-    // console.log(d);
+require("../lib/ezFs")("./input.txt").then(d => {
     const asteroids = [];
+    const lineBreak = d.includes("\n") ? "\n" : "\r\n";
 
-    d.split("\r\n").forEach((row, rowIdx) => {
+    let max = 0,
+        maxCoord;
+
+    d.split(lineBreak).forEach((row, rowIdx) => {
         row.split("").forEach((cell, cellIdx) => {
-            // cell === asteroid && console.log(cellIdx, rowIdx);
             if (cell !== asteroid) {
                 return;
             }
@@ -28,19 +29,14 @@ require("../lib/ezFs")("./test/input-0.txt").then(d => {
         });
     });
 
-    // console.log(asteroids);
+    asteroids.forEach((asteroid, idx) => {
+        const numAsteroids = getNumAsteroids(asteroid, popAt(asteroids, idx));
 
-    console.log(numAsteroids(asteroids[0], asteroids.slice(1)));
+        if (numAsteroids > max) {
+            max = numAsteroids;
+            maxCoord = asteroid;
+        }
+    });
 
-    // console.log(parsed);
-
-    // parsed.forEach(row => {
-    //     row.forEach(cell => {
-    //         if (cell !== asteroid) {
-    //             return;
-    //         }
-
-
-    //     });
-    // })
+    console.log(max, maxCoord);
 });
