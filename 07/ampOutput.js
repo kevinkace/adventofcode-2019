@@ -1,9 +1,6 @@
 const Intcode = require("./Intcode");
 
 function testPhaseSetting(phaseSetting, prevOutput, opcodes) {
-
-    // console.log(phaseSetting, prevOutput);
-
     const intcode = new Intcode(opcodes, [ phaseSetting, prevOutput ]);
 
     const output = intcode.process();

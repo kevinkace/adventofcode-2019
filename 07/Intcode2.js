@@ -16,7 +16,6 @@ module.exports = class Intcode {
 
     process(input) {
         let iteration = -1,
-            outputIteration,
 
             instruction = this.opcodes[this.idx];
 
@@ -60,12 +59,6 @@ module.exports = class Intcode {
                     break;
 
                 case 4:
-                    outputIteration = iteration;
-
-                    // console.log("output");
-
-                    // output.push(value1);
-
                     this.idx += 2;
 
                     return value1;
@@ -95,9 +88,6 @@ module.exports = class Intcode {
                     break;
 
                 case 99:
-                    // console.log(this.opcodes.join(", "));
-                    // console.log(iteration === outputIteration + 1 ? "DONE" : "ERROR");
-
                     return { output : input };
 
                 default:
@@ -127,4 +117,4 @@ module.exports = class Intcode {
     toString() {
         return this.opcodes.join(",");
     }
-}
+};
